@@ -1,7 +1,7 @@
 # # -*- coding: utf-8 -*-
 from bs4 import BeautifulSoup
 from Crypto.Cipher import AES
-import threading
+#import threading
 import requests
 import time
 import sys
