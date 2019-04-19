@@ -1,16 +1,17 @@
 # # -*- coding: utf-8 -*-
 from bs4 import BeautifulSoup
 from Crypto.Cipher import AES
-import threading
+#import threading
 import requests
 import time
-import sys
+#import sys
 import re
 import os
-'''函数定义'''
+
 Video_Type = input('请输入选项：1.在线视频 2.国产自拍 3.中文字幕 4.亚洲无码 5.欧美 6.制服 7.卡通 8.乱伦 9.名优 10.熟女 :\n ==>')
 Page = input('输入下载页码（1-100）：\n ==>')
 URL = 'https://qqchub520.com/vodshow/' + Video_Type + '--------' + Page + '---.html'
+
 def get_sex_url(URL):
 	html = requests.get(URL)
 	soup = BeautifulSoup(html.content, 'lxml')
@@ -114,4 +115,5 @@ def main():
 					list_flag = list_flag + 1
 				else:
 					print('当前页面已经下载完成！')
+
 main()
