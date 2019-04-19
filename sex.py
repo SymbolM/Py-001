@@ -7,10 +7,11 @@ import time
 import sys
 import re
 import os
-'''函数定义'''
+
 Video_Type = input('请输入选项：1.在线视频 2.国产自拍 3.中文字幕 4.亚洲无码 5.欧美 6.制服 7.卡通 8.乱伦 9.名优 10.熟女 :\n ==>')
 Page = input('输入下载页码（1-100）：\n ==>')
 URL = 'https://qqchub520.com/vodshow/' + Video_Type + '--------' + Page + '---.html'
+
 def get_sex_url(URL):
 	html = requests.get(URL)
 	soup = BeautifulSoup(html.content, 'lxml')
@@ -20,9 +21,11 @@ def get_sex_url(URL):
 		sex_url = 'https://www.qqchub520.com' + i.get('href')
 		sex_url_list.append(sex_url)
 	return sex_url_list
+
 def get_m3u8_url(num):
 	m3u8_url = 'https://rzlkq.com/' + num[0] + '/1000kb/hls/index.m3u8'
 	return m3u8_url
+
 def get_video_url_list(m3u8_url):
 	html = requests.get(m3u8_url)
 	#print(html.text)
@@ -33,15 +36,18 @@ def get_video_url_list(m3u8_url):
 		i = m3u8_url[:-10] + i
 		video_url_list.append(i)
 	return video_url_list
+
 def get_video(video_url,key):
 	video = requests.get(video_url).content  # .decode("UTF-8")
 	cryptor = AES.new(key, AES.MODE_CBC, key)
 	plain_text = cryptor.decrypt(video)
 	return plain_text.rstrip(b'\0')
+
 def get_key(num):
 	key_url = 'https://rzlkq.com/' + num[0] + '/1000kb/hls/key.key'
 	key = requests.get(key_url).content
 	return key
+
 def get_sex_title(URL):
 	html = requests.get(URL)
 	soup = BeautifulSoup(html.content, 'lxml')
@@ -53,6 +59,7 @@ def get_sex_title(URL):
 		#print(sex_title)
 		sex_title_list.append(sex_title)
 	return sex_title_list
+
 def get_number(sex_url):
 	html = requests.get(sex_url)
 	soup = BeautifulSoup(html.content, 'lxml')
@@ -60,6 +67,7 @@ def get_number(sex_url):
 	b = re.findall(r'\\/[0-9]+\\/', a)[0]
 	num = re.findall(r'[0-9]+', b)
 	return num
+
 def save_file(video_url_list,key,num,FileName,PATH):
 	cc = len(video_url_list)
 	Down_Video_Flag = 0
@@ -88,6 +96,7 @@ def save_file(video_url_list,key,num,FileName,PATH):
 			os.system(cmd2)
 		except OSError as resean:
 			print('合并文件失败！' + str(resean))
+
 def main():
 	title_list = get_sex_title(URL)
 	list = get_sex_url(URL)
@@ -114,4 +123,6 @@ def main():
 					list_flag = list_flag + 1
 				else:
 					print('当前页面已经下载完成！')
+
+
 main()
